@@ -1,21 +1,23 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
-}
-
-#opinion-container {
-  margin-top: 20px;
-}
-
 a:link, a:visited {
   color: black;
+}
+
+.blog {
+  border: 3px dotted #121212;
+  margin: 20px 10px;
+  padding: 10px 20px;
 }
 
 body {
   background-color: #ecc377;
   color: black;
   font-family: sans-serif;
+}
+
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
 }
 
 img {
@@ -26,15 +28,11 @@ img {
   height: 50%;
 }
 
+#opinion-container {
+  margin-top: 20px;
+}
 
 .topnav a {
   float: left;
   color: green;
 }
-
-.blog {
-  border: 3px dotted #121212;
-  margin: 20px 10px;
-  padding: 10px 20px;
-}
-
