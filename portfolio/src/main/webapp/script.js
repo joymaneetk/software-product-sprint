@@ -37,3 +37,9 @@ function addRandomOpinion() {
     const opinionContainer = document.getElementById('opinion-container');
     opinionContainer.innerText = opinion;
 }
+
+async function getDataUsingAsyncAwait() {
+  const response = await fetch('/data');
+  const data = await response.text();
+  document.getElementById('data-container').innerText = data;
+}
