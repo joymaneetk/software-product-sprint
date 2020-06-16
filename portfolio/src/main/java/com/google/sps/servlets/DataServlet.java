@@ -13,6 +13,9 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
+import java.util.ArrayList;
+import java.util.List;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -24,10 +27,38 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+    private List<String> messages;
+
+  @Override
+  public void init(){
+      messages = new ArrayList<>();
+      messages.add("hardcode list 1");
+      messages.add("hardcode list 2");
+      messages.add("hardcode list 3");
+  }  
+  
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("we got the data servlet connected to the index.html and script.js");
+    //response.setContentType("text/html;");
+   //response.getWriter().println("we got the data servlet connected to the index.html and script.js");
     //response.getWriter().println("<h1>Hello Joy K!</h1>");
+    //response.getWriter().println(messages);
+
+ response.setContentType("application/json;");
+
+    // Convert the server stats to JSON  
+    String json = convertToJsonUsingGson(messages);
+    //response.getWriter().println(json);
+
+ //Send the JSON as the response
+    response.getWriter().println(json);
+   }
+
+
+private String convertToJsonUsingGson(List<String> messages) {
+    Gson gson = new Gson();
+    String json = gson.toJson(messages);
+    return json;
   }
 }
