@@ -21,6 +21,10 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +37,7 @@ public class DataServlet extends HttpServlet {
 
    // private List<String> messages;
 
-    private List<String> comments = new ArrayList<>();
+  //  private List<String> comments = new ArrayList<>();
 
 
   @Override
@@ -52,14 +56,38 @@ public class DataServlet extends HttpServlet {
    //response.getWriter().println("we got the data servlet connected to the index.html and script.js");
     //response.getWriter().println("<h1>Hello Joy K!</h1>");
     //response.getWriter().println(messages);
-
+/*
  response.setContentType("application/json;");
 
-    // Convert the server stats to JSON  
-    String json = convertToJsonUsingGson(comments);
+      //Convert the server stats to JSON  
+String json = convertToJsonUsingGson(comments);
 
- //Send the JSON as the response
-    response.getWriter().println(json);
+    //Send the JSON as the response
+response.getWriter().println(json);
+*/
+
+    Query query = new Query("Comment");
+    //.addSort("timestamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();
+    System.out.println(comments);
+    for (Entity c : results.asIterable()) {
+        String name = (String) c.getProperty("name");
+        String comment = (String) c.getProperty("text-input");
+        
+    String toReturn = name + ": " + comment;
+      comments.add(toReturn);
+
+    }
+
+     response.setContentType("application/json;");
+     String json = convertToJsonUsingGson(comments);
+     response.getWriter().println(json);
+
+  
    }
 
    @Override
@@ -80,7 +108,7 @@ public class DataServlet extends HttpServlet {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("text-input", eachcomment); 
-    commentEntity.setProperty("time", timestamp);
+    //commentEntity.setProperty("time", timestamp);
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);

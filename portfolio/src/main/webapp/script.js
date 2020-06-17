@@ -34,12 +34,19 @@ function addRandomOpinion() {
 
 function getdata() {
   fetch('/data').then(response => response.json()).then((comments) => {
+     const listmap = document.createElement("ul");   
+     comments.map(comment => {
+        const list = document.createElement("li");   
+        list.innerHTML = comment;
+
+         listmap.appendChild(list);
+     });
+
     const commentsContainer = document.getElementById('comment-container');
     commentsContainer.innerHTML = '';
 
-    commentsContainer.appendChild(
-        createListElement(comments));
-    console.log(commentsContainer);
+    commentsContainer.appendChild(listmap);
+        //createListElement(comments));
 
 
 
