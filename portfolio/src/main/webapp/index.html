@@ -9,7 +9,8 @@
 </head>
 
 
-<body>
+<body onload="getdata()" >
+
 	<div class="topnav">
 		<ul>
 			<li><a class="active" href="index.html">My Portfolio</a></li>
@@ -50,13 +51,26 @@
 			<button onclick="addRandomOpinion()">Fact Me 🧠 </button>
 			<div id="opinion-container"></div>
 
-            <button onclick="getDataUsingAsyncAwait()">Data from Servlet</button>
+            <!--<button onclick="getDataUsingAsyncAwait()">Data from Servlet</button>
                   <div id="data-container"></div>
-                  
-                  
-                  <button onclick="getdata()">list</button>
-                  <div id="hardcode-message-container"></div>
+                  -->
 
+                  
+                 <!-- <button onclick="getdata()">list</button>
+                  <div id="message-container"></div>
+                  -->
+                  
+     
+     <form action="/data" method="POST">
+        <p>Comment:</p>
+        <textarea name = "text-input"> </textarea>
+        <br>
+        </br>
+
+        <input type="submit" />
+
+        </form>  
+      <div id="comment-container" ></div>
 
 
 		</div>

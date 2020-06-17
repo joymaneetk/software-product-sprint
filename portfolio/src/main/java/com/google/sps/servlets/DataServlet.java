@@ -27,14 +27,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private List<String> messages;
+   // private List<String> messages;
+
+    private List<String> comments = new ArrayList<>();
+
 
   @Override
   public void init(){
-      messages = new ArrayList<>();
+     /* messages = new ArrayList<>();
       messages.add("hardcode list 1");
       messages.add("hardcode list 2");
       messages.add("hardcode list 3");
+      */
   }  
   
 
@@ -48,13 +52,41 @@ public class DataServlet extends HttpServlet {
  response.setContentType("application/json;");
 
     // Convert the server stats to JSON  
-    String json = convertToJsonUsingGson(messages);
-    //response.getWriter().println(json);
+    String json = convertToJsonUsingGson(comments);
 
  //Send the JSON as the response
     response.getWriter().println(json);
    }
 
+   @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    // Get the input from the form.
+    //String text = getParameter(request, "name", "");
+
+    String eachcomment = getParameter(request, "text-input", "");
+    if(eachcomment == null){
+         eachcomment = "test";
+    }
+    System.out.println(eachcomment);
+    
+
+    comments.add(eachcomment);
+    System.out.println("Comments:" + comments);
+    response.setContentType("application/json;");
+    String json = convertToJsonUsingGson(comments);
+    response.getWriter().println(json);
+    System.out.println("Json:" + json);
+    response.sendRedirect("/index.html");
+
+  }
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
+  }
 
 private String convertToJsonUsingGson(List<String> messages) {
     Gson gson = new Gson();

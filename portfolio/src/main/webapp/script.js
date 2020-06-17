@@ -33,13 +33,21 @@ function addRandomOpinion() {
 }
 
 function getdata() {
-  fetch('/data').then(response => response.json()).then((messages) => {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsContainer = document.getElementById('comment-container');
+    commentsContainer.innerHTML = '';
+
+    commentsContainer.appendChild(
+        createListElement(comments));
+    console.log(commentsContainer);
+
+
+
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
 
-    console.log();
 
-    const statsListElement = document.getElementById('hardcode-message-container');
+  /*  const statsListElement = document.getElementById('hardcode-message-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(
         createListElement('Message 1: ' + messages[0]));
@@ -49,6 +57,8 @@ function getdata() {
         createListElement('Message 3: ' + messages[2]));
     console.log();
     console.log(messages);
+    
+    */
     
   });
 }
