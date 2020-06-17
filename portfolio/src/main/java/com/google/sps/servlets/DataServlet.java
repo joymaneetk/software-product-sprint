@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,22 +66,27 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     // Get the input from the form.
-    //String text = getParameter(request, "name", "");
 
-    String eachcomment = getParameter(request, "text-input", "");
-    if(eachcomment == null){
-         eachcomment = "test";
-    }
-    System.out.println(eachcomment);
-    
-
-    comments.add(eachcomment);
-    System.out.println("Comments:" + comments);
+     /* comments.add(eachcomment);
     response.setContentType("application/json;");
     String json = convertToJsonUsingGson(comments);
     response.getWriter().println(json);
-    System.out.println("Json:" + json);
+    */
+    
+    String eachcomment = getParameter(request, "text-input", "");
+    String name = getParameter(request, "name", "");
+    long timestamp = System.currentTimeMillis();
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("text-input", eachcomment); 
+    commentEntity.setProperty("time", timestamp);
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
+
 
   }
     private String getParameter(HttpServletRequest request, String name, String defaultValue) {
