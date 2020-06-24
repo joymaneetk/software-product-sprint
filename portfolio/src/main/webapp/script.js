@@ -85,10 +85,58 @@ async function getDataUsingAsyncAwait() {
 }
 
 function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: 37.6376938, lng: -122.0843484}, 
+        zoom: 9,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+        
+    const Marker1 = new google.maps.Marker({
+        position: {lat: 37.7973659, lng: -122.4815332},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'SF trail',
+  });
+  const Marker2 = new google.maps.Marker({
+        position: {lat: 37.3960432, lng: -121.8040007},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Alum Rock Park',
+  });
+  const Marker3 = new google.maps.Marker({
+        position: {lat: 37.8568455, lng: -122.4817483},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Sausalito Boardwalk',
+  });
+
+    const Marker4 = new google.maps.Marker({
+        position: {lat: 37.4955696, lng: -122.4988757},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Half Moon Bay: Mavericks Beach',
+  });
+  const Marker5 = new google.maps.Marker({
+        position: {lat: 37.769425, lng: -122.4884025},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Golden Gate Park',
+  });
+
+  
+  //Marker1.addListener('click', toggleBounce);
+
 }
+
+/* function toggleBounce() {
+        if (Marker1.getAnimation() !== null) {
+          Marker1.setAnimation(null);
+        } else {
+          Marker1.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+      */
 
 function init() {
     createMap();
