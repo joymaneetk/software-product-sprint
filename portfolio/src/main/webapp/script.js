@@ -17,16 +17,10 @@
  */
 function addRandomOpinion() {
     const opinions =
-        ["I have never felt so young but old at the same time. When does this feeling go away?",
-            "你好，世界！is Hello World in Chinese ",
-            "This... stuff? Oh. Okay. I see. You think this has nothing to do with you. You go to your closet and you select... I don't know... that lumpy blue sweater, for instance, because you're trying to tell the world that you take yourself too seriously to care about what you put on your back. But what you don't know is that that sweater is not just blue. It's not turquoise. It's not lapis. It's actually cerulean. And you're also blithely unaware of the fact that in 2002, Oscar de la Renta did a collection of cerulean gowns. And then I think it was Yves Saint Laurent... wasn't it?…who showed cerulean military jackets? I think we need a jacket here. And then cerulean quickly showed up in the collections of eight different designers. And then it, uh, filtered down through the department stores and then trickled on down into some tragic Casual Corner where you, no doubt, fished it out of some clearance bin. However, that blue represents millions of dollars and countless jobs and it's sort of comical how you think that you've made a choice that exempts you from the fashion industry when, in fact, you're wearing the sweater that was selected for you by the people in this room from a pile of stuff.",
-            "Mars is home to the tallest mountain in the solar system",
+        [ "Mars is home to the tallest mountain in the solar system",
             "The heart of a shrimp is located in its head.",
-            "I play the alto-sax",
             "The oldest 'your mom' joke was discovered on a 3,500 year old Babylonian tablet.",
             "The United States Navy has started using Xbox controllers for their periscopes.",
-            "I'm a swimmer.",
-            "The following can be read forward and backwards: Do geese see God?",
             "Recycling one glass jar saves enough energy to watch television for 3 hours.",
             "Approximately 10-20% of U.S. power outages are caused by squirrels."];
 
@@ -38,8 +32,114 @@ function addRandomOpinion() {
     opinionContainer.innerText = opinion;
 }
 
+function getdata() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+     const listmap = document.createElement("ul");   
+     comments.map(comment => {
+        const list = document.createElement("li");   
+        list.innerHTML = comment;
+
+         listmap.appendChild(list);
+     });
+
+    const commentsContainer = document.getElementById('comment-container');
+    commentsContainer.innerHTML = '';
+
+    commentsContainer.appendChild(listmap);
+        //createListElement(comments));
+
+
+
+    // stats is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+
+  /*  const statsListElement = document.getElementById('hardcode-message-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+        createListElement('Message 1: ' + messages[0]));
+    statsListElement.appendChild(
+        createListElement('Message 2 : ' + messages[1]));
+    statsListElement.appendChild(
+        createListElement('Message 3: ' + messages[2]));
+    console.log();
+    console.log(messages);
+    
+    */
+    
+  });
+}
+
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+
 async function getDataUsingAsyncAwait() {
   const response = await fetch('/data');
   const data = await response.text();
   document.getElementById('data-container').innerText = data;
 }
+
+function createMap() {
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: 37.6376938, lng: -122.0843484}, 
+        zoom: 9,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+        
+    const Marker1 = new google.maps.Marker({
+        position: {lat: 37.7973659, lng: -122.4815332},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'SF trail',
+  });
+  const Marker2 = new google.maps.Marker({
+        position: {lat: 37.3960432, lng: -121.8040007},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Alum Rock Park',
+  });
+  const Marker3 = new google.maps.Marker({
+        position: {lat: 37.8568455, lng: -122.4817483},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Sausalito Boardwalk',
+  });
+
+    const Marker4 = new google.maps.Marker({
+        position: {lat: 37.4955696, lng: -122.4988757},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Half Moon Bay: Mavericks Beach',
+  });
+  const Marker5 = new google.maps.Marker({
+        position: {lat: 37.769425, lng: -122.4884025},
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Golden Gate Park',
+  });
+
+  
+  //Marker1.addListener('click', toggleBounce);
+
+}
+
+/* function toggleBounce() {
+        if (Marker1.getAnimation() !== null) {
+          Marker1.setAnimation(null);
+        } else {
+          Marker1.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+      */
+
+function init() {
+    createMap();
+    getdata();
+}
+
